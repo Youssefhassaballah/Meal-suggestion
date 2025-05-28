@@ -2,7 +2,7 @@ import subprocess
 from pyswip import Prolog
 
 class MealPlanner:
-    def __init__(self, answers, prolog_file="data2.pl"):
+    def __init__(self, answers, prolog_file="data4.pl"):
         self.prolog_file = prolog_file
         self.prolog = Prolog()
         self.prolog.consult(self.prolog_file)
@@ -11,53 +11,68 @@ class MealPlanner:
     def run_prolog_query(self, query):
         return list(self.prolog.query(query))
     
-    def generate_prolog_query(self):
-    # Map Python attribute names to Prolog predicate names
-        attribute_mapping = {
-        'goal': None,  # Handled specially in the goal processing
-        'time': 'time',
-        'dietary': 'dietary',
-        'protein': 'protein',
-        'spice': 'spice',
-        'meal_type': 'meal_type',
-        'cuisine': 'cuisine',
-        'taste': 'taste',
-        'health': 'health',
-        'prep_time': 'prep_time',
-        'avoided_ingredients': 'avoided_ingredients',
-        'budget': 'budget'
-        }
+    def generate_recommend_meal_query(self):
+        """
+        Generate a Prolog query for the get_meal_recommendations function.
+        Returns a query string that can be executed in Prolog.
+        """
 
-        # Process special cases first (like 'goal')
-        prolog_options = []
+        # Mapping from Python answer keys to Prolog parameter order
+        # Order matches: Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients
+        answer_mapping = [
+            'goal',
+            'time', 
+            'dietary',
+            'protein',
+            'spice',
+            'meal_type',
+            'cuisine',
+            'taste',
+            'health',
+            'prep_time',
+            'budget'
+        ]
 
-        # Handle muscle_gain goal (prioritize high protein)
-        if self.answers.get('goal') == 'muscle_gain':
-            if self.answers.get('protein') is None:
-                prolog_options.append("protein(plant_based)")
+        # Build parameter list for the Prolog query
+        parameters = []
 
-        # Add all other attributes
-        for py_attr, pl_attr in attribute_mapping.items():
-            if pl_attr and py_attr in self.answers:
-                value = self.answers[py_attr]
-                # Handle special cases for values
-                if py_attr == 'avoided_ingredients':
-                    # Split comma-separated ingredients if needed
-                    ingredients = [ing.strip() for ing in value.split(',')]
-                    for ing in ingredients:
-                        prolog_options.append(f"avoided_ingredients({ing})")
-                else:
-                    prolog_options.append(f"{pl_attr}({value})")
+        for key in answer_mapping:
+            value = self.answers.get(key, 'no_preference')
 
-        # Build the Prolog query
-        options_str = ", ".join(prolog_options)
-        query = f"suggest_meal([{options_str}], Meal)"
+            # Handle special formatting cases
+            if key == 'prep_time' and '_' in str(value):
+                # Quote time ranges like '10_30_min'
+                formatted_value = f"'{value}'"
+            elif value is None or value == '' or value == 'none':
+                formatted_value = 'no_preference'
+            else:
+                formatted_value = str(value)
+
+            parameters.append(formatted_value)
+
+        # Handle avoided ingredients (must be a proper Prolog list)
+        avoided_ingredients = self.answers.get('avoided_ingredients', [])
+        if isinstance(avoided_ingredients, list):
+            if avoided_ingredients:
+                # Convert to Prolog list format: [item1, item2, item3]
+                avoided_list = '[' + ', '.join(str(item) for item in avoided_ingredients) + ']'
+            else:
+                avoided_list = '[]'  # Empty list
+        else:
+            avoided_list = '[]'
+
+        parameters.append(avoided_list)
+
+        # Add the result variable
+        parameters.append('RecommendedMeals')
+
+        # Generate the complete query
+        query = f"get_90_percent_match_meals({', '.join(parameters)})"
 
         return query
 
-
     def suggest_meal(self):
-        query = self.generate_prolog_query()
+        query = self.generate_recommend_meal_query()
         print(f"Generated Prolog query: {query}")
         return self.run_prolog_query(query)
 
