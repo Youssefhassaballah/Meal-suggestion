@@ -370,89 +370,58 @@ meal('Moroccan Msemen', tasty_food, snack, vegetarian, no_preference, mild, home
 meal('Pakistani Chana Chaat', weight_loss, snack, vegan, plant_based, spicy, quick_easy, asian, savory, very_healthy, less_10_min, low, [chickpeas, onions, tamarind, chaat_masala]).
 meal('Australian Anzac Biscuits', tasty_food, snack, vegetarian, no_preference, mild, home_cooked, no_preference, sweet, treat_day, '10_30_min', medium, [oats, coconut, golden_syrup]).
 
-% Query predicates for meal recommendations
+% MINIMAL PROLOG CODE - Only functions needed for:
+% 1. get_90_percent_meals_with_scores_fixed/12
+% 2. meals_by_name/2
 
-% Find meals matching specific criteria
-find_meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget) :-
-    meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, _).
-
-% Find meals by single criterion
-meals_by_goal(Goal, Meals) :-
-    findall(Name, meal(Name, Goal, _, _, _, _, _, _, _, _, _, _, _), Meals).
-
-meals_by_time(Time, Meals) :-
-    findall(Name, meal(Name, _, Time, _, _, _, _, _, _, _, _, _, _), Meals).
-
-meals_by_dietary(Dietary, Meals) :-
-    findall(Name, meal(Name, _, _, Dietary, _, _, _, _, _, _, _, _, _), Meals).
-
-meals_by_protein(Protein, Meals) :-
-    findall(Name, meal(Name, _, _, _, Protein, _, _, _, _, _, _, _, _), Meals).
-
-meals_by_spice(Spice, Meals) :-
-    findall(Name, meal(Name, _, _, _, _, Spice, _, _, _, _, _, _, _), Meals).
-
-meals_by_cuisine(Cuisine, Meals) :-
-    findall(Name, meal(Name, _, _, _, _, _, _, Cuisine, _, _, _, _, _), Meals).
-
-meals_by_prep_time(PrepTime, Meals) :-
-    findall(Name, meal(Name, _, _, _, _, _, _, _, _, _, PrepTime, _, _), Meals).
-
-meals_by_budget(Budget, Meals) :-
-    findall(Name, meal(Name, _, _, _, _, _, _, _, _, _, _, Budget, _), Meals).
-
+% Function 1: Get meal name and ingredients by name
 meals_by_name(Name, Ingredients) :-
     meal(Name, _,_,_, _, _, _, _, _, _, _, _, Ingredients).
 
+% Function 2: Get meals with 70%+ match scores (despite name saying 90%)
+get_90_percent_meals_with_scores_fixed(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealsWithScores) :-
+    findall(
+        Name,
+        (
+            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
+            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients)
+        ),
+        AllMealNames
+    ),
+    sort(AllMealNames, UniqueMealNames),
+    findall(
+        meal_match(Name, BestScore),
+        (
+            member(Name, UniqueMealNames),
+            get_best_score_for_meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore),
+            BestScore >= 70
+        ),
+        UnsortedMeals
+    ),
+    sort_meals_by_score(UnsortedMeals, MealsWithScores).
 
+% SUPPORTING FUNCTIONS (required by the main functions above)
 
-
-% Get meal details including ingredients
-meal_details(Name, Details) :-
-    meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, Ingredients),
-    Details = [
-        goal(Goal),
-        time(Time),
-        dietary(Dietary),
-        protein(Protein),
-        spice(Spice),
-        meal_type(MealType),
-        cuisine(Cuisine),
-        taste(Taste),
-        health(Health),
-        prep_time(PrepTime),
-        budget(Budget),
-        ingredients(Ingredients)
-    ].
-
-% Advanced queries for recommendations
-healthy_weight_loss_meals(Meals) :-
-    findall(Name, meal(Name, weight_loss, _, _, _, _, _, _, _, very_healthy, _, _, _), Meals).
-
-quick_breakfast(Meals) :-
-    findall(Name, meal(Name, _, breakfast, _, _, _, _, _, _, _, less_10_min, _, _), QuickMeals),
-    findall(Name, meal(Name, _, breakfast, _, _, _, _, _, _, _, '10_30_min', _, _), MediumMeals),
-    append(QuickMeals, MediumMeals, Meals).
-
-vegetarian_dinners(Meals) :-
-    findall(Name, (
-        meal(Name, _, dinner, Dietary, _, _, _, _, _, _, _, _, _),
-        (Dietary = vegetarian; Dietary = vegan)
-    ), Meals).
-
-budget_meals(Meals) :-
-    findall(Name, meal(Name, _, _, _, _, _, _, _, _, _, _, low, _), Meals).
-
-spicy_asian_meals(Meals) :-
-    findall(Name, (
-        meal(Name, _, _, _, _, Spice, _, asian, _, _, _, _, _),
-        (Spice = spicy; Spice = very_spicy)
-    ), Meals).
-
-% Helper to check if meal contains avoided ingredients
+% Check if meal contains avoided ingredients
 contains_avoided_ingredients(_, []) :- fail.
 contains_avoided_ingredients(MealIngredients, [H|T]) :-
     (member(H, MealIngredients) -> true ; contains_avoided_ingredients(MealIngredients, T)).
+
+% Get the best (highest) score for a specific meal
+get_best_score_for_meal(MealName, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore) :-
+    findall(
+        Score,
+        (
+            meal(MealName, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, _),
+            calculate_match_score(
+                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
+                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
+                Score
+            )
+        ),
+        Scores
+    ),
+    max_list(Scores, BestScore).
 
 % Calculate match score (higher = better match)
 calculate_match_score(UserPrefs, MealAttrs, Score) :-
@@ -481,112 +450,7 @@ compatible_preferences(mild, medium).
 compatible_preferences(medium, spicy).
 compatible_preferences(low, medium).
 
-% **NEW FUNCTION: Get meals with 90% or higher match**
-get_90_percent_match_meals(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, HighMatchMeals) :-
-    findall(
-        name_score(Name, MatchScore),
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                MatchScore
-            ),
-            MatchScore >= 80  % Only meals with 90% or higher match
-        ),
-        ScoredMeals
-    ),
-    sort_names_by_score(ScoredMeals, SortedMeals),
-    extract_names_only(SortedMeals, HighMatchMeals).
-
-% Alternative version that takes percentage as parameter
-get_high_match_meals(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MinPercentage, HighMatchMeals) :-
-    findall(
-        name_score(Name, MatchScore),
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                MatchScore
-            ),
-            MatchScore >= MinPercentage
-        ),
-        ScoredMeals
-    ),
-    sort_names_by_score(ScoredMeals, SortedMeals),
-    extract_names_only(SortedMeals, HighMatchMeals).
-
-get_90_percent_meals_with_scores_fixed(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealsWithScores) :-
-    findall(
-        Name,
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients)
-        ),
-        AllMealNames
-    ),
-    sort(AllMealNames, UniqueMealNames),
-    findall(
-        meal_match(Name, BestScore),
-        (
-            member(Name, UniqueMealNames),
-            get_best_score_for_meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore),
-            BestScore >= 70
-        ),
-        UnsortedMeals
-    ),
-    sort_meals_by_score(UnsortedMeals, MealsWithScores).
-
-% Helper predicate to get the best (highest) score for a specific meal
-get_best_score_for_meal(MealName, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore) :-
-    findall(
-        Score,
-        (
-            meal(MealName, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, _),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                Score
-            )
-        ),
-        Scores
-    ),
-    max_list(Scores, BestScore).
-
-% Enhanced version that returns both names and scores for 90% matches
-get_90_percent_meals_with_scores(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealsWithScores) :-
-    findall(
-        meal_match(Name, MatchScore),
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                MatchScore
-            ),
-            MatchScore >= 70
-        ),
-        UnsortedMeals
-    ),
-    sort_meals_by_score(UnsortedMeals, MealsWithScores).
-
-% Helper functions for the new 90% match functionality
-sort_names_by_score(Names, SortedNames) :-
-    predsort(compare_name_scores, Names, SortedNames).
-
-compare_name_scores(Order, name_score(_, Score1), name_score(_, Score2)) :-
-    (Score1 > Score2 -> Order = (<) ; 
-     Score1 < Score2 -> Order = (>) ; 
-     Order = (=)).
-
-extract_names_only([], []).
-extract_names_only([name_score(Name, _)|Rest], [Name|Names]) :-
-    extract_names_only(Rest, Names).
-
+% Sort meals by score (highest first)
 sort_meals_by_score(Meals, SortedMeals) :-
     predsort(compare_meal_scores, Meals, SortedMeals).
 
@@ -594,84 +458,3 @@ compare_meal_scores(Order, meal_match(_, Score1), meal_match(_, Score2)) :-
     (Score1 > Score2 -> Order = (<) ; 
      Score1 < Score2 -> Order = (>) ; 
      Order = (=)).
-
-% MAIN FUNCTION: Get meal recommendations based on all questionnaire answers
-get_meal_recommendations(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealNames) :-
-    findall(
-        score_name(MatchScore, Name),
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                MatchScore
-            ),
-            MatchScore > 50
-        ),
-        ScoredMeals
-    ),
-    sort(ScoredMeals, SortedScoredMeals),
-    reverse(SortedScoredMeals, DescendingScoredMeals),
-    extract_names_from_scored(DescendingScoredMeals, MealNames).
-
-extract_names_from_scored([], []).
-extract_names_from_scored([score_name(_, Name)|Rest], [Name|Names]) :-
-    extract_names_from_scored(Rest, Names).
-
-get_meal_names(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealNames) :-
-    findall(
-        name_score(Name, MatchScore),
-        (
-            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
-            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients),
-            calculate_match_score(
-                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
-                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
-                MatchScore
-            ),
-            MatchScore > 0
-        ),
-        UnsortedNames
-    ),
-    sort_names_by_score(UnsortedNames, SortedNames),
-    extract_names_only(SortedNames, MealNames).
-
-% Helper to extract preference from list
-extract_preference(Key, Preferences, Value) :-
-    member(Key(Value), Preferences), !.
-extract_preference(_, _, no_preference).
-
-get_meal_names_from_list(Preferences, MealNames) :-
-    extract_preference(goal, Preferences, Goal),
-    extract_preference(time, Preferences, Time),
-    extract_preference(dietary, Preferences, Dietary),
-    extract_preference(protein, Preferences, Protein),
-    extract_preference(spice, Preferences, Spice),
-    extract_preference(meal_type, Preferences, MealType),
-    extract_preference(cuisine, Preferences, Cuisine),
-    extract_preference(taste, Preferences, Taste),
-    extract_preference(health, Preferences, Health),
-    extract_preference(prep_time, Preferences, PrepTime),
-    extract_preference(budget, Preferences, Budget),
-    extract_preference(avoided_ingredients, Preferences, AvoidedIngredients),
-    get_meal_names(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealNames).
-
-quick_meal_names(Scenario, MealNames) :-
-    scenario_preferences(Scenario, Preferences),
-    get_meal_names_from_list(Preferences, MealNames).
-
-recommend_meal(Answers, MealNames) :-
-    Answers = answers(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, Avoid),
-    get_meal_names(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, Avoid, MealNames).
-
-% USAGE EXAMPLES FOR 90% MATCH FUNCTION:
-% 
-% Example 1: Get meals with exactly 90% match
-% ?- get_90_percent_match_meals(weight_loss, breakfast, vegetarian, plant_based, mild, quick_easy, american, savory, very_healthy, less_10_min, medium, [], HighMatchMeals).
-%
-% Example 2: Get meals with custom percentage (e.g., 80% or higher)
-% ?- get_high_match_meals(muscle_gain, dinner, no_restrictions, chicken, medium, home_cooked, asian, savory, balanced, '10_30_min', medium, [], 80, HighMatchMeals).
-%
-% Example 3: Get meals with scores for 90% matches
-% ?- get_90_percent_meals_with_scores(general_health, lunch, vegan, plant_based, mild, home_cooked, no_preference, savory, very_healthy, '10_30_min', medium, [], MealsWithScores).
