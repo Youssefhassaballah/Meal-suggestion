@@ -311,7 +311,7 @@ get_90_percent_match_meals(Goal, Time, Dietary, Protein, Spice, MealType, Cuisin
                 [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
                 MatchScore
             ),
-            MatchScore >= 90  % Only meals with 90% or higher match
+            MatchScore >= 80  % Only meals with 90% or higher match
         ),
         ScoredMeals
     ),
@@ -337,6 +337,43 @@ get_high_match_meals(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Tas
     sort_names_by_score(ScoredMeals, SortedMeals),
     extract_names_only(SortedMeals, HighMatchMeals).
 
+get_90_percent_meals_with_scores_fixed(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealsWithScores) :-
+    findall(
+        Name,
+        (
+            meal(Name, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, Ingredients),
+            \+ contains_avoided_ingredients(Ingredients, AvoidedIngredients)
+        ),
+        AllMealNames
+    ),
+    sort(AllMealNames, UniqueMealNames),
+    findall(
+        meal_match(Name, BestScore),
+        (
+            member(Name, UniqueMealNames),
+            get_best_score_for_meal(Name, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore),
+            BestScore >= 70
+        ),
+        UnsortedMeals
+    ),
+    sort_meals_by_score(UnsortedMeals, MealsWithScores).
+
+% Helper predicate to get the best (highest) score for a specific meal
+get_best_score_for_meal(MealName, Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, BestScore) :-
+    findall(
+        Score,
+        (
+            meal(MealName, MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget, _),
+            calculate_match_score(
+                [Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget],
+                [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
+                Score
+            )
+        ),
+        Scores
+    ),
+    max_list(Scores, BestScore).
+
 % Enhanced version that returns both names and scores for 90% matches
 get_90_percent_meals_with_scores(Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients, MealsWithScores) :-
     findall(
@@ -349,7 +386,7 @@ get_90_percent_meals_with_scores(Goal, Time, Dietary, Protein, Spice, MealType, 
                 [MGoal, MTime, MDietary, MProtein, MSpice, MMealType, MCuisine, MTaste, MHealth, MPrepTime, MBudget],
                 MatchScore
             ),
-            MatchScore >= 90
+            MatchScore >= 70
         ),
         UnsortedMeals
     ),

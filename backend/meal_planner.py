@@ -67,7 +67,7 @@ class MealPlanner:
         parameters.append('RecommendedMeals')
 
         # Generate the complete query
-        query = f"get_90_percent_match_meals({', '.join(parameters)})"
+        query = f"get_90_percent_meals_with_scores_fixed({', '.join(parameters)})"
 
         return query
 
