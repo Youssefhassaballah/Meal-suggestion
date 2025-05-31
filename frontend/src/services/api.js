@@ -25,7 +25,7 @@ export const submitMealQuestionnaire = async (answers) => {
     }
 
     const data = await response.json();
-    return data;
+    return data[0];
   } catch (error) {
     console.error('Error submitting questionnaire:', error);
     throw error;
@@ -33,29 +33,27 @@ export const submitMealQuestionnaire = async (answers) => {
 };
 
 
-// Additional API functions you might need
-export const getMealRecommendations = async (userId) => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/meal-recommendations/${userId}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching meal recommendations:', error);
-    throw error;
-  }
-};
 
-export const getUserPreferences = async (userId) => {
+
+
+export const getMealIngredients = async (mealName) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/user-preferences/${userId}`);
+    const response = await fetch(`${API_BASE_URL}/meal-ingredients`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ mealName }),
+    });
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return await response.json();
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Error fetching user preferences:', error);
+    console.error('Error fetching meal ingredients:', error);
     throw error;
   }
 };

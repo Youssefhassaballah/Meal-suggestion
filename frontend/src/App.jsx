@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import {
   Question1, Question2, Question3, Question4, Question5,
   Question6, Question7, Question8, Question9, Question10,
-  Question11,
-  Question12
+  Question11, Question12
 } from './Components/Question';
 import ProgressBar from './Components/ProgressBar';
 import Navigation from './Components/Navigtion';
@@ -18,11 +17,12 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [recommendedMeals, setRecommendedMeals] = useState([]);
 
   const questions = [
     Question1, Question2, Question3, Question4, Question5,
     Question6, Question7, Question8, Question9, Question10,
-    Question11 , Question12
+    Question11, Question12
   ];
 
   const handleAnswer = (answer) => {
@@ -45,21 +45,55 @@ function App() {
     }
   };
 
+  const parseMealRecommendations = (apiResponse) => {
+    // Parse the meal_match format: "meal_match(Teriyaki Chicken, 85)"
+    return apiResponse.RecommendedMeals.map(mealString => {
+      const match = mealString.match(/meal_match\((.+),\s*(\d+)\)/);
+      if (match) {
+        return {
+          name: match[1].trim(),
+          score: parseInt(match[2])
+        };
+      }
+      return null;
+    }).filter(meal => meal !== null);
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setError(null);
     
     try {
-      await submitMealQuestionnaire(answers);
+      const response = await submitMealQuestionnaire(answers);
+      
+      // Parse the recommended meals from the API response
+      if (response && response.RecommendedMeals) {
+        const parsedMeals = parseMealRecommendations(response);
+        setRecommendedMeals(parsedMeals);
+      }
+      
       setSubmitted(true);
       console.log('Answers submitted successfully');
     } catch (error) {
       console.error('Error submitting answers:', error);
       setError('Failed to submit answers. Please try again.');
       
-      // For demo purposes, still show success after a delay
+      // For demo purposes, set mock recommended meals
+      const mockResponse = {
+        RecommendedMeals: [
+          "meal_match(Teriyaki Chicken, 85)",
+          "meal_match(Beef Stir Fry, 82)",
+          "meal_match(Pork Chops with Apple Sauce, 80)",
+          "meal_match(Cobb Salad, 75)",
+          "meal_match(Beef Tacos, 72)",
+          "meal_match(Chocolate Protein Pancakes, 70)"
+        ]
+      };
+      
       setTimeout(() => {
         console.log('Demo mode: Simulating successful submission');
+        const parsedMeals = parseMealRecommendations(mockResponse);
+        setRecommendedMeals(parsedMeals);
         setSubmitted(true);
       }, 1000);
     } finally {
@@ -72,13 +106,19 @@ function App() {
     setCurrentQuestion(0);
     setAnswers({});
     setError(null);
+    setRecommendedMeals([]);
   };
 
   const CurrentQuestionComponent = questions[currentQuestion];
   const isAnswered = answers[QUESTION_KEYS[currentQuestion]];
 
   if (submitted) {
-    return <SuccessPage onRetake={handleRetake} />;
+    return (
+      <SuccessPage 
+        onRetake={handleRetake} 
+        recommendedMeals={recommendedMeals}
+      />
+    );
   }
 
   return (
@@ -123,9 +163,6 @@ function App() {
           onNext={nextQuestion}
           onSubmit={handleSubmit}
         />
-
-       
-        
       </div>
     </div>
   );
