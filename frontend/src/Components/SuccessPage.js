@@ -101,9 +101,12 @@ const SuccessPage = ({ onRetake, recommendedMeals = [] }) => {
     return mockData[mealName] || ["Ingredients not available"];
   };
 
-  const getScoreColor = (score) => {
-    if (score >= 80) return "text-green-600 bg-green-100";
-    if (score >= 70) return "text-yellow-600 bg-yellow-100";
+  const getScoreColor = (meal) => {
+    if (meal?.score) {
+      if (meal.score >= 100) meal.score = 100; // Normalize high scores to 100
+      if (meal.score >= 80) return "text-green-600 bg-green-100";
+      if (meal.score >= 70) return "text-yellow-600 bg-yellow-100";
+    }
     return "text-orange-600 bg-orange-100";
   };
 
@@ -136,7 +139,7 @@ const SuccessPage = ({ onRetake, recommendedMeals = [] }) => {
               >
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-semibold text-gray-800 text-sm">{meal.name}</h3>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getScoreColor(meal.score)}`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getScoreColor(meal)}`}>
                     {meal.score}%
                   </span>
                 </div>
