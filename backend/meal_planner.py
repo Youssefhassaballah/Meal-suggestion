@@ -30,12 +30,11 @@ class MealPlanner:
         Generate a Prolog query for the get_meal_recommendations function.
         Returns a query string that can be executed in Prolog.
         """
-
         # Mapping from Python answer keys to Prolog parameter order
         # Order matches: Goal, Time, Dietary, Protein, Spice, MealType, Cuisine, Taste, Health, PrepTime, Budget, AvoidedIngredients
         answer_mapping = [
             'goal',
-            'time', 
+            'time',
             'dietary',
             'protein',
             'spice',
@@ -46,13 +45,11 @@ class MealPlanner:
             'prep_time',
             'budget'
         ]
-
+        
         # Build parameter list for the Prolog query
         parameters = []
-
         for key in answer_mapping:
             value = self.answers.get(key, 'no_preference')
-
             # Handle special formatting cases
             if key == 'prep_time' and '_' in str(value):
                 # Quote time ranges like '10_30_min'
@@ -61,28 +58,35 @@ class MealPlanner:
                 formatted_value = 'no_preference'
             else:
                 formatted_value = str(value)
-
             parameters.append(formatted_value)
-
+        
         # Handle avoided ingredients (must be a proper Prolog list)
-        avoided_ingredients = self.answers.get('avoided_ingredients', [])
-        if isinstance(avoided_ingredients, list):
-            if avoided_ingredients:
-                # Convert to Prolog list format: [item1, item2, item3]
-                avoided_list = '[' + ', '.join(str(item) for item in avoided_ingredients) + ']'
-            else:
-                avoided_list = '[]'  # Empty list
+        avoided_ingredients_raw = self.answers.get('avoided_ingredients', '')
+        print(f"Avoided ingredients: {avoided_ingredients_raw}")
+        
+        # Fix: Handle string input properly
+        if isinstance(avoided_ingredients_raw, str) and avoided_ingredients_raw.strip():
+            # Split the string and clean each ingredient
+            avoided_ingredients = [ingredient.strip() for ingredient in avoided_ingredients_raw.split(',')]
+            # Remove empty strings
+            avoided_ingredients = [ingredient for ingredient in avoided_ingredients if ingredient]
+        elif isinstance(avoided_ingredients_raw, list):
+            # If it's already a list, just clean it
+            avoided_ingredients = [str(ingredient).strip() for ingredient in avoided_ingredients_raw if str(ingredient).strip()]
         else:
-            avoided_list = '[]'
-
+            # Empty or None case
+            avoided_ingredients = []
+        
+        # Create Prolog list format
+        avoided_list = f"[{','.join(avoided_ingredients)}]" if avoided_ingredients else '[]'
+        print(f"Avoided list for Prolog: {avoided_list}")
         parameters.append(avoided_list)
-
+        
         # Add the result variable
         parameters.append('RecommendedMeals')
-
+        
         # Generate the complete query
         query = f"get_90_percent_meals_with_scores_fixed({', '.join(parameters)})"
-
         return query
 
     def suggest_meal(self):
