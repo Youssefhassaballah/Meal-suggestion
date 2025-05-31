@@ -2,11 +2,25 @@ import subprocess
 from pyswip import Prolog
 
 class MealPlanner:
-    def __init__(self, answers, prolog_file="data4.pl"):
+    def __init__(self, answers = {}, prolog_file="data.pl"):
         self.prolog_file = prolog_file
         self.prolog = Prolog()
         self.prolog.consult(self.prolog_file)
         self.answers = answers
+        
+    def get_ingredients(self, meal_name):
+        """
+        Get ingredients for a specific meal.
+        Returns a list of ingredients or an empty list if the meal is not found.
+        """
+        
+        query = f"meals_by_name('{meal_name}', Ingredients)"
+        result = list(self.prolog.query(query))
+        print(result)
+        if result:
+            return result[0]['Ingredients']
+        else:
+            return []
 
     def run_prolog_query(self, query):
         return list(self.prolog.query(query))
@@ -67,7 +81,7 @@ class MealPlanner:
         parameters.append('RecommendedMeals')
 
         # Generate the complete query
-        query = f"get_90_percent_match_meals({', '.join(parameters)})"
+        query = f"get_90_percent_meals_with_scores_fixed({', '.join(parameters)})"
 
         return query
 
