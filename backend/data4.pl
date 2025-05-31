@@ -94,7 +94,31 @@ meal('Protein Waffles', muscle_gain, breakfast, vegetarian, no_preference, mild,
 meal('Breakfast Sandwich', energy_boost, breakfast, no_restrictions, no_preference, mild, quick_easy, american, savory, balanced, less_10_min, medium, [bread, eggs, cheese, ham]).
 meal('Fruit Salad with Yogurt', weight_loss, breakfast, vegetarian, no_preference, mild, no_cooking, no_preference, sweet, very_healthy, less_10_min, low, [mixed_fruits, yogurt]).
 meal('Shakshuka', tasty_food, breakfast, vegetarian, no_preference, spicy, home_cooked, middle_eastern, savory, balanced, '10_30_min', medium, [eggs, tomatoes, peppers, spices]).
-
+meal('Pumpkin Spice Oatmeal', comfort_food, breakfast, vegan, plant_based, mild, home_cooked, american, sweet, balanced, '10_30_min', low, [oats, pumpkin_puree, cinnamon, almond_milk]).
+meal('Egg White Scramble', weight_loss, breakfast, vegetarian, no_preference, mild, quick_easy, american, savory, very_healthy, less_10_min, low, [egg_whites, spinach, mushrooms]).
+meal('Buckwheat Pancakes', general_health, breakfast, vegan, plant_based, mild, home_cooked, american, sweet, very_healthy, '10_30_min', medium, [buckwheat_flour, banana, almond_milk]).
+meal('Breakfast Tacos', energy_boost, breakfast, no_restrictions, no_preference, medium, quick_easy, mexican, savory, balanced, less_10_min, medium, [eggs, tortillas, avocado, salsa]).
+meal('Coconut Flour Waffles', weight_loss, breakfast, vegetarian, no_preference, mild, home_cooked, american, sweet, very_healthy, '10_30_min', medium, [coconut_flour, eggs, coconut_milk]).
+meal('Savory Oatmeal Bowl', general_health, breakfast, vegetarian, no_preference, mild, home_cooked, no_preference, savory, very_healthy, '10_30_min', low, [oats, cheese, roasted_vegetables]).
+meal('Berry Quinoa Breakfast', muscle_gain, breakfast, vegetarian, plant_based, mild, home_cooked, no_preference, sweet, very_healthy, '10_30_min', medium, [quinoa, mixed_berries, almond_butter]).
+meal('Breakfast Pizza', tasty_food, breakfast, no_restrictions, no_preference, mild, home_cooked, italian, savory, treat_day, '10_30_min', high, [pizza_dough, eggs, bacon, cheese]).
+meal('Tofu Scramble', weight_loss, breakfast, vegan, plant_based, medium, home_cooked, no_preference, savory, very_healthy, '10_30_min', low, [tofu, turmeric, vegetables]).
+meal('Almond Butter Toast with Banana', energy_boost, breakfast, vegetarian, plant_based, mild, quick_easy, american, sweet, balanced, less_10_min, medium, [bread, almond_butter, banana]).
+meal('Sweet Potato Hash', muscle_gain, breakfast, no_restrictions, no_preference, mild, home_cooked, american, savory, balanced, '10_30_min', medium, [sweet_potato, eggs, bell_peppers]).
+meal('Chocolate Chia Pudding', tasty_food, breakfast, vegan, plant_based, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, low, [chia_seeds, cocoa_powder, almond_milk]).
+meal('Breakfast Sausage Patties', muscle_gain, breakfast, no_restrictions, no_preference, mild, home_cooked, american, savory, balanced, '10_30_min', medium, [sausage, herbs, spices]).
+meal('Matcha Overnight Oats', general_health, breakfast, vegan, plant_based, mild, no_cooking, no_preference, sweet, very_healthy, less_10_min, low, [oats, matcha_powder, coconut_milk]).
+meal('Breakfast Bruschetta', tasty_food, breakfast, vegetarian, no_preference, mild, quick_easy, italian, mix_both, treat_day, less_10_min, medium, [bread, tomatoes, mozzarella, basil]).
+meal('Paleo Breakfast Skillet', muscle_gain, breakfast, no_restrictions, no_preference, mild, home_cooked, american, savory, balanced, '10_30_min', high, [sweet_potato, sausage, eggs, kale]).
+meal('Cinnamon Roll Oatmeal', comfort_food, breakfast, vegetarian, no_preference, mild, home_cooked, american, sweet, treat_day, '10_30_min', medium, [oats, cinnamon, cream_cheese]).
+meal('Breakfast Stuffed Peppers', weight_loss, breakfast, vegetarian, no_preference, mild, home_cooked, american, savory, very_healthy, '10_30_min', medium, [bell_peppers, eggs, spinach]).
+meal('Protein French Toast Sticks', muscle_gain, breakfast, no_restrictions, no_preference, mild, home_cooked, american, sweet, balanced, '10_30_min', medium, [bread, protein_powder, eggs, cinnamon]).
+meal('Breakfast Grain Bowl', general_health, breakfast, vegan, plant_based, mild, home_cooked, no_preference, mix_both, very_healthy, '10_30_min', medium, [quinoa, roasted_vegetables, tahini]).
+meal('Ham and Cheese Croissant', tasty_food, breakfast, no_restrictions, no_preference, mild, no_cooking, french, savory, treat_day, less_10_min, high, [croissant, ham, cheese]).
+meal('Breakfast Fried Rice', energy_boost, breakfast, no_restrictions, no_preference, medium, quick_easy, asian, savory, balanced, '10_30_min', medium, [rice, eggs, vegetables, soy_sauce]).
+meal('Blueberry Almond Pancakes', tasty_food, breakfast, vegetarian, no_preference, mild, home_cooked, american, sweet, treat_day, '10_30_min', medium, [pancake_mix, blueberries, almonds]).
+meal('Breakfast Polenta Bowl', comfort_food, breakfast, vegetarian, no_preference, mild, home_cooked, italian, savory, balanced, '10_30_min', medium, [polenta, mushrooms, parmesan]).
+meal('Breakfast Egg Muffins', weight_loss, breakfast, no_restrictions, no_preference, mild, home_cooked, american, savory, very_healthy, '10_30_min', low, [eggs, vegetables, cheese]).
 % ========================================
 % LUNCH MEALS (30 meals)
 % ========================================
@@ -129,7 +153,31 @@ meal('Veggie Sushi Bowl', general_health, lunch, vegetarian, plant_based, mild, 
 meal('Lobster Roll', tasty_food, lunch, no_restrictions, fish_seafood, mild, restaurant_style, american, savory, treat_day, no_cooking, high, [lobster, bread, mayonnaise]).
 meal('Black Bean Burger', weight_loss, lunch, vegan, plant_based, medium, quick_easy, american, savory, very_healthy, less_10_min, medium, [black_bean_patty, bun, vegetables]).
 meal('Chicken Teriyaki Bowl', muscle_gain, lunch, no_restrictions, chicken, medium, home_cooked, asian, sweet, balanced, '10_30_min', medium, [chicken, rice, vegetables, teriyaki_sauce]).
-
+meal('Korean Bibimbap', energy_boost, lunch, no_restrictions, beef, medium, restaurant_style, asian, savory, balanced, no_cooking, medium, [rice, beef, vegetables, egg, gochujang]).
+meal('Chickpea Salad Sandwich', weight_loss, lunch, vegan, plant_based, mild, quick_easy, american, savory, very_healthy, less_10_min, low, [chickpeas, bread, celery, vegan_mayo]).
+meal('Beef Bulgogi Bowl', muscle_gain, lunch, no_restrictions, beef, medium, home_cooked, asian, savory, balanced, '10_30_min', medium, [beef, rice, vegetables, bulgogi_sauce]).
+meal('Miso Glazed Eggplant', general_health, lunch, vegan, plant_based, medium, home_cooked, asian, savory, very_healthy, '10_30_min', low, [eggplant, miso, rice, sesame]).
+meal('Turkey Avocado Wrap', weight_loss, lunch, no_restrictions, no_preference, mild, quick_easy, american, savory, balanced, less_10_min, medium, [turkey, avocado, wrap, vegetables]).
+meal('Vietnamese Banh Mi', tasty_food, lunch, no_restrictions, no_preference, spicy, restaurant_style, asian, savory, treat_day, no_cooking, medium, [baguette, pork, pickled_vegetables]).
+meal('Moroccan Chickpea Stew', comfort_food, lunch, vegan, plant_based, spicy, home_cooked, middle_eastern, savory, very_healthy, more_30_min, low, [chickpeas, tomatoes, spices]).
+meal('Sardine Toast', general_health, lunch, no_restrictions, fish_seafood, mild, quick_easy, no_preference, savory, very_healthy, less_10_min, medium, [sardines, bread, lemon, herbs]).
+meal('Buffalo Chicken Wrap', muscle_gain, lunch, no_restrictions, chicken, spicy, quick_easy, american, savory, balanced, less_10_min, medium, [chicken, tortilla, hot_sauce, blue_cheese]).
+meal('Japanese Curry Rice', comfort_food, lunch, no_restrictions, no_preference, medium, home_cooked, asian, savory, balanced, more_30_min, medium, [curry_roux, potatoes, carrots, rice]).
+meal('Halloumi Salad', tasty_food, lunch, vegetarian, no_preference, mild, quick_easy, middle_eastern, savory, balanced, '10_30_min', medium, [halloumi, watermelon, mint]).
+meal('Lentil Salad Bowl', weight_loss, lunch, vegan, plant_based, mild, no_cooking, no_preference, savory, very_healthy, less_10_min, low, [lentils, vegetables, lemon_dressing]).
+meal('Pulled Pork Sandwich', tasty_food, lunch, no_restrictions, no_preference, medium, restaurant_style, american, savory, treat_day, no_cooking, high, [pulled_pork, bun, coleslaw]).
+meal('Tempeh Reuben', general_health, lunch, vegetarian, plant_based, mild, home_cooked, american, savory, balanced, '10_30_min', medium, [tempeh, rye_bread, sauerkraut, dressing]).
+meal('Thai Basil Chicken', energy_boost, lunch, no_restrictions, chicken, very_spicy, home_cooked, asian, savory, balanced, '10_30_min', medium, [chicken, basil, chili, rice]).
+meal('Mediterranean Lentil Salad', weight_loss, lunch, vegan, plant_based, mild, no_cooking, middle_eastern, savory, very_healthy, less_10_min, low, [lentils, cucumber, tomatoes, feta]).
+meal('Cheesesteak Sandwich', tasty_food, lunch, no_restrictions, beef, mild, restaurant_style, american, savory, treat_day, no_cooking, high, [ribeye, cheese, bread, peppers]).
+meal('Jackfruit Tacos', general_health, lunch, vegan, plant_based, medium, home_cooked, mexican, savory, very_healthy, '10_30_min', low, [jackfruit, tortillas, avocado, lime]).
+meal('Peruvian Chicken Bowl', energy_boost, lunch, no_restrictions, chicken, spicy, home_cooked, no_preference, savory, balanced, '10_30_min', medium, [chicken, rice, beans, sauce]).
+meal('Baked Falafel Plate', weight_loss, lunch, vegan, plant_based, medium, home_cooked, middle_eastern, savory, very_healthy, '10_30_min', medium, [falafel, hummus, salad, pita]).
+meal('Cajun Shrimp Pasta', tasty_food, lunch, no_restrictions, fish_seafood, spicy, home_cooked, american, savory, treat_day, '10_30_min', high, [shrimp, pasta, cream_sauce, cajun_spice]).
+meal('Mushroom Walnut Salad', general_health, lunch, vegetarian, plant_based, mild, quick_easy, no_preference, savory, very_healthy, '10_30_min', low, [mushrooms, walnuts, greens, vinaigrette]).
+meal('Hawaiian Poke Bowl', tasty_food, lunch, no_restrictions, fish_seafood, mild, restaurant_style, asian, savory, balanced, no_cooking, high, [tuna, rice, avocado, seaweed]).
+meal('Spinach Feta Pie', comfort_food, lunch, vegetarian, no_preference, mild, home_cooked, greek, savory, balanced, more_30_min, medium, [spinach, feta, phyllo_dough]).
+meal('BBQ Tempeh Sandwich', weight_loss, lunch, vegan, plant_based, medium, quick_easy, american, savory, very_healthy, less_10_min, medium, [tempeh, bbq_sauce, coleslaw, bun]).
 % ========================================
 % DINNER MEALS (35 meals)
 % ========================================
@@ -169,7 +217,31 @@ meal('Chicken Enchiladas', comfort_food, dinner, no_restrictions, chicken, mediu
 meal('Ratatouille', weight_loss, dinner, vegan, plant_based, mild, home_cooked, no_preference, savory, very_healthy, more_30_min, low, [vegetables, herbs, olive_oil]).
 meal('Fish and Chips', tasty_food, dinner, no_restrictions, fish_seafood, mild, restaurant_style, american, savory, treat_day, no_cooking, medium, [fish, potatoes, batter]).
 meal('Beef Stroganoff', comfort_food, dinner, no_restrictions, beef, mild, home_cooked, no_preference, savory, treat_day, more_30_min, medium, [beef, pasta, mushrooms, cream]).
-
+meal('Korean BBQ Beef', muscle_gain, dinner, no_restrictions, beef, medium, home_cooked, asian, savory, balanced, '10_30_min', high, [beef, rice, kimchi, ssamjang]).
+meal('Butternut Squash Risotto', comfort_food, dinner, vegetarian, no_preference, mild, home_cooked, italian, savory, balanced, more_30_min, medium, [butternut_squash, arborio_rice, parmesan]).
+meal('Moroccan Tagine', tasty_food, dinner, no_restrictions, no_preference, spicy, home_cooked, middle_eastern, savory, balanced, more_30_min, medium, [chicken, apricots, spices, couscous]).
+meal('Vegan Mac and Cheese', general_health, dinner, vegan, plant_based, mild, home_cooked, american, savory, balanced, '10_30_min', medium, [pasta, nutritional_yeast, cashews]).
+meal('Honey Garlic Salmon', muscle_gain, dinner, no_restrictions, fish_seafood, mild, home_cooked, no_preference, sweet, very_healthy, '10_30_min', high, [salmon, honey, garlic, vegetables]).
+meal('Stuffed Portobello Mushrooms', weight_loss, dinner, vegetarian, no_preference, mild, home_cooked, no_preference, savory, very_healthy, '10_30_min', low, [portobello, quinoa, cheese]).
+meal('Jerk Chicken with Rice', energy_boost, dinner, no_restrictions, chicken, very_spicy, home_cooked, caribbean, savory, balanced, more_30_min, medium, [chicken, jerk_spice, rice, beans]).
+meal('Eggplant Lasagna', general_health, dinner, vegetarian, no_preference, mild, home_cooked, italian, savory, very_healthy, more_30_min, medium, [eggplant, tomato_sauce, ricotta]).
+meal('Beef Bulgogi', tasty_food, dinner, no_restrictions, beef, medium, home_cooked, asian, sweet, balanced, '10_30_min', high, [beef, bulgogi_marinade, rice]).
+meal('Crispy Tofu Bowl', weight_loss, dinner, vegan, plant_based, medium, home_cooked, asian, savory, very_healthy, '10_30_min', low, [tofu, rice, vegetables, sauce]).
+meal('Lemon Herb Roasted Chicken', muscle_gain, dinner, no_restrictions, chicken, mild, home_cooked, no_preference, savory, balanced, more_30_min, high, [chicken, lemon, herbs, potatoes]).
+meal('Sweet Potato Black Bean Enchiladas', general_health, dinner, vegetarian, plant_based, medium, home_cooked, mexican, savory, very_healthy, more_30_min, medium, [sweet_potato, black_beans, tortillas, sauce]).
+meal('Garlic Butter Shrimp Pasta', tasty_food, dinner, no_restrictions, fish_seafood, mild, home_cooked, italian, savory, treat_day, '10_30_min', high, [shrimp, pasta, garlic, butter]).
+meal('Thai Green Curry', energy_boost, dinner, no_restrictions, chicken, very_spicy, home_cooked, asian, savory, balanced, more_30_min, medium, [chicken, green_curry_paste, coconut_milk, vegetables]).
+meal('Ratatouille Pasta', weight_loss, dinner, vegetarian, plant_based, mild, home_cooked, french, savory, very_healthy, '10_30_min', low, [pasta, eggplant, zucchini, tomato_sauce]).
+meal('Herb Crusted Salmon', muscle_gain, dinner, no_restrictions, fish_seafood, mild, home_cooked, no_preference, savory, very_healthy, '10_30_min', high, [salmon, herbs, breadcrumbs, vegetables]).
+meal('Mushroom Stroganoff', comfort_food, dinner, vegetarian, no_preference, mild, home_cooked, no_preference, savory, balanced, '10_30_min', medium, [mushrooms, pasta, sour_cream]).
+meal('Caribbean Curry Goat', tasty_food, dinner, no_restrictions, no_preference, spicy, home_cooked, caribbean, savory, treat_day, more_30_min, high, [goat, curry_powder, potatoes]).
+meal('Zucchini Noodles with Pesto', weight_loss, dinner, vegan, plant_based, mild, quick_easy, italian, savory, very_healthy, less_10_min, low, [zucchini, pesto, cherry_tomatoes]).
+meal('Korean Soft Tofu Stew', comfort_food, dinner, vegan, plant_based, very_spicy, home_cooked, asian, savory, balanced, more_30_min, low, [tofu, kimchi, vegetables, gochujang]).
+meal('Balsamic Glazed Chicken', muscle_gain, dinner, no_restrictions, chicken, mild, home_cooked, no_preference, sweet, balanced, '10_30_min', medium, [chicken, balsamic, vegetables]).
+meal('Vegetable Korma', general_health, dinner, vegetarian, plant_based, mild, home_cooked, indian, savory, very_healthy, more_30_min, medium, [vegetables, coconut_milk, spices, rice]).
+meal('Cajun Blackened Fish', energy_boost, dinner, no_restrictions, fish_seafood, spicy, home_cooked, american, savory, balanced, '10_30_min', high, [fish, cajun_spice, vegetables]).
+meal('Pumpkin Sage Pasta', tasty_food, dinner, vegetarian, no_preference, mild, home_cooked, italian, savory, treat_day, '10_30_min', medium, [pasta, pumpkin, sage, cream]).
+meal('Ethiopian Lentil Stew', weight_loss, dinner, vegan, plant_based, spicy, home_cooked, african, savory, very_healthy, more_30_min, low, [lentils, berbere_spice, injera]).
 % ========================================
 % SNACK MEALS (20 meals)
 % ========================================
@@ -194,6 +266,31 @@ meal('Edamame', weight_loss, snack, vegan, plant_based, mild, quick_easy, asian,
 meal('Banana with Almond Butter', energy_boost, snack, vegan, plant_based, mild, no_cooking, american, sweet, balanced, less_10_min, low, [banana, almond_butter]).
 meal('Kale Chips', weight_loss, snack, vegan, plant_based, mild, home_cooked, american, savory, very_healthy, '10_30_min', low, [kale, olive_oil, salt]).
 meal('Protein Muffin', muscle_gain, snack, vegetarian, no_preference, mild, home_cooked, american, sweet, balanced, '10_30_min', medium, [protein_powder, oats, banana]).
+meal('Seaweed Snacks', weight_loss, snack, vegan, plant_based, mild, no_cooking, asian, savory, very_healthy, less_10_min, low, [seaweed, sesame_oil, salt]).
+meal('Chocolate Protein Shake', muscle_gain, snack, no_restrictions, no_preference, mild, quick_easy, no_preference, sweet, balanced, less_10_min, medium, [protein_powder, milk, chocolate, banana]).
+meal('Spiced Roasted Chickpeas', energy_boost, snack, vegan, plant_based, spicy, home_cooked, no_preference, savory, balanced, '10_30_min', low, [chickpeas, paprika, garlic_powder]).
+meal('Avocado Chocolate Mousse', tasty_food, snack, vegan, plant_based, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, medium, [avocado, cocoa, maple_syrup]).
+meal('Tzatziki with Veggies', weight_loss, snack, vegetarian, no_preference, mild, quick_easy, greek, savory, very_healthy, less_10_min, low, [yogurt, cucumber, garlic, vegetables]).
+meal('Pistachio Dark Chocolate Bark', tasty_food, snack, vegetarian, no_preference, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, high, [dark_chocolate, pistachios, sea_salt]).
+meal('Turmeric Golden Milk', general_health, snack, vegan, plant_based, mild, quick_easy, indian, sweet, very_healthy, less_10_min, low, [turmeric, coconut_milk, honey]).
+meal('Stuffed Dates', energy_boost, snack, vegetarian, plant_based, mild, no_cooking, no_preference, sweet, balanced, less_10_min, medium, [dates, almond_butter, coconut]).
+meal('Wasabi Peas', tasty_food, snack, vegan, plant_based, spicy, no_cooking, asian, savory, balanced, less_10_min, low, [peas, wasabi, salt]).
+meal('Chocolate Covered Almonds', tasty_food, snack, vegetarian, no_preference, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, high, [almonds, dark_chocolate]).
+meal('Savory Cottage Cheese Bowl', weight_loss, snack, vegetarian, no_preference, medium, quick_easy, no_preference, savory, very_healthy, less_10_min, low, [cottage_cheese, tomatoes, cucumber]).
+meal('Peanut Butter Celery Sticks', energy_boost, snack, vegetarian, plant_based, mild, no_cooking, american, mix_both, balanced, less_10_min, low, [celery, peanut_butter, raisins]).
+meal('Baked Kale Chips', weight_loss, snack, vegan, plant_based, mild, home_cooked, american, savory, very_healthy, '10_30_min', low, [kale, olive_oil, nutritional_yeast]).
+meal('Chocolate Hummus with Fruit', tasty_food, snack, vegan, plant_based, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, medium, [chickpeas, cocoa, fruits]).
+meal('Spicy Roasted Nuts', energy_boost, snack, vegan, plant_based, spicy, home_cooked, no_preference, savory, balanced, '10_30_min', medium, [mixed_nuts, cayenne, maple_syrup]).
+meal('Yogurt Covered Raisins', tasty_food, snack, vegetarian, no_preference, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, medium, [yogurt, raisins]).
+meal('Savory Oat Cakes', general_health, snack, vegetarian, no_preference, mild, home_cooked, no_preference, savory, balanced, '10_30_min', low, [oats, cheese, herbs]).
+meal('Chia Energy Bars', muscle_gain, snack, vegan, plant_based, mild, no_cooking, no_preference, sweet, balanced, less_10_min, medium, [chia_seeds, dates, nuts]).
+meal('Cucumber Sushi Rolls', weight_loss, snack, vegan, plant_based, mild, quick_easy, asian, savory, very_healthy, less_10_min, low, [cucumber, avocado, carrots]).
+meal('Pumpkin Spice Energy Balls', tasty_food, snack, vegan, plant_based, mild, no_cooking, no_preference, sweet, treat_day, less_10_min, medium, [dates, pumpkin_puree, spices]).
+meal('Antipasto Skewers', tasty_food, snack, no_restrictions, no_preference, mild, no_cooking, italian, savory, treat_day, less_10_min, high, [cheese, olives, salami]).
+meal('Matcha Energy Bites', energy_boost, snack, vegan, plant_based, mild, no_cooking, no_preference, sweet, balanced, less_10_min, medium, [dates, matcha, coconut]).
+meal('Roasted Pumpkin Seeds', weight_loss, snack, vegan, plant_based, mild, home_cooked, no_preference, savory, very_healthy, '10_30_min', low, [pumpkin_seeds, salt, spices]).
+meal('Mango Sticky Rice Balls', tasty_food, snack, vegetarian, no_preference, mild, no_cooking, asian, sweet, treat_day, less_10_min, medium, [mango, sticky_rice, coconut_milk]).
+meal('Salted Caramel Protein Balls', muscle_gain, snack, vegetarian, no_preference, mild, no_cooking, no_preference, sweet, balanced, less_10_min, medium, [protein_powder, dates, almond_butter]).
 % Query predicates for meal recommendations
 
 % Find meals matching specific criteria
