@@ -39,5 +39,20 @@ def meal_suggestion():
     
     return jsonify({"message": f"Meal suggestion based on {response}!"}), 200
 
+@app.route('/meal-ingredients', methods=['POST'])
+def meal_ingredients():
+    data = request.get_json()
+    if not data or 'mealName' not in data:
+        return jsonify({"error": "Meal is required"}), 400
+
+    meal = data['mealName']
+    meal_planner = MealPlanner()
+    ingredients = meal_planner.get_ingredients(meal)
+    
+    if not ingredients:
+        return jsonify({"error": "No ingredients found for the specified meal"}), 404
+    
+    return jsonify({"ingredients": ingredients}), 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000,debug=True)

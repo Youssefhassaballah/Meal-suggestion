@@ -119,6 +119,7 @@ meal('Breakfast Fried Rice', energy_boost, breakfast, no_restrictions, no_prefer
 meal('Blueberry Almond Pancakes', tasty_food, breakfast, vegetarian, no_preference, mild, home_cooked, american, sweet, treat_day, '10_30_min', medium, [pancake_mix, blueberries, almonds]).
 meal('Breakfast Polenta Bowl', comfort_food, breakfast, vegetarian, no_preference, mild, home_cooked, italian, savory, balanced, '10_30_min', medium, [polenta, mushrooms, parmesan]).
 meal('Breakfast Egg Muffins', weight_loss, breakfast, no_restrictions, no_preference, mild, home_cooked, american, savory, very_healthy, '10_30_min', low, [eggs, vegetables, cheese]).
+
 % ========================================
 % LUNCH MEALS (30 meals)
 % ========================================
@@ -178,6 +179,7 @@ meal('Mushroom Walnut Salad', general_health, lunch, vegetarian, plant_based, mi
 meal('Hawaiian Poke Bowl', tasty_food, lunch, no_restrictions, fish_seafood, mild, restaurant_style, asian, savory, balanced, no_cooking, high, [tuna, rice, avocado, seaweed]).
 meal('Spinach Feta Pie', comfort_food, lunch, vegetarian, no_preference, mild, home_cooked, greek, savory, balanced, more_30_min, medium, [spinach, feta, phyllo_dough]).
 meal('BBQ Tempeh Sandwich', weight_loss, lunch, vegan, plant_based, medium, quick_easy, american, savory, very_healthy, less_10_min, medium, [tempeh, bbq_sauce, coleslaw, bun]).
+
 % ========================================
 % DINNER MEALS (35 meals)
 % ========================================
