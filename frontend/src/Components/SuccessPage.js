@@ -10,12 +10,8 @@ const SuccessPage = ({ onRetake, recommendedMeals = [] }) => {
 
   // Use passed recommendedMeals or fallback to mock data
   const mealsToShow = recommendedMeals.length > 0 ? recommendedMeals : [
-    { name: "Teriyaki Chicken", score: 85 },
-    { name: "Beef Stir Fry", score: 82 },
-    { name: "Pork Chops with Apple Sauce", score: 80 },
-    { name: "Cobb Salad", score: 75 },
-    { name: "Beef Tacos", score: 72 },
-    { name: "Chocolate Protein Pancakes", score: 70 }
+    { name: "Sorry there no meal available plz make the quiz", score:0 },
+
   ];
 
   const handleMealClick = async (mealName) => {
