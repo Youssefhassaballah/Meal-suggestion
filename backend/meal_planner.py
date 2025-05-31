@@ -2,7 +2,7 @@ import subprocess
 from pyswip import Prolog
 
 class MealPlanner:
-    def __init__(self, answers, prolog_file="data.pl"):
+    def __init__(self, answers = {}, prolog_file="data.pl"):
         self.prolog_file = prolog_file
         self.prolog = Prolog()
         self.prolog.consult(self.prolog_file)
@@ -14,7 +14,7 @@ class MealPlanner:
         Returns a list of ingredients or an empty list if the meal is not found.
         """
         
-        query = f"meals_by_name({meal_name}, Ingredients)"
+        query = f"meals_by_name('{meal_name}', Ingredients)"
         result = list(self.prolog.query(query))
         print(result)
         if result:
