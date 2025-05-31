@@ -37,7 +37,7 @@ def meal_suggestion():
     print(f"Received answers abdo : {answers}")
     # Here you would typically call your meal planning logic
     
-    return jsonify({"message": f"Meal suggestion based on {response}!"}), 200
+    return jsonify(response), 200
 
 @app.route('/meal-ingredients', methods=['POST'])
 def meal_ingredients():
